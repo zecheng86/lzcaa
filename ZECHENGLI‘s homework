@@ -1,0 +1,87 @@
+---
+title: "MSSP Practicum Fall'23: EDA"
+author: "ZECHENG LI"
+date: "2023-09-12"
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+First of all: change the YAML header and put **your name** as the
+`author`!
+
+## Introduction
+
+Under the `data` folder there are two data files, `data9b_m.txt` and
+`data9b_w.txt`. Each row in both files contains for one person (women in
+`data9b_w.txt`, men in `data9b_m.txt`) the number of steps that this
+person took on a particular day (`steps`) and the body mass index
+(`bmi`). Assume that both traits are normally distributed for males and
+for females. Your task is to perform analyzes to compare steps and BMI
+between women and men.
+
+0.  Start by loading both datasets in two different data frames. Make
+    sure to check if the **header** was correctly specified!
+
+**Answer:**
+
+```{r q0}
+#dw <- read.table(...) # for women's data
+#dm <- read.table(...) # for men's data
+
+dw <- read.table("data/data9b_w.txt", header = TRUE)
+dm <- read.table("data/data9b_m.txt", header = TRUE)
+```
+
+## Analysis
+
+Consider the following (alternative, not null) hypotheses:
+
+1.  The correlation coefficient between `steps` and `bmi` is negative
+    for women.
+2.  The correlation coefficient between `steps` and `bmi` is positive
+    for men.
+3.  There is a difference in the mean number of steps between women and
+    men.
+
+Think about which test to use and calculate the corresponding p-value.
+
+**Answer:**
+
+```{r q1}
+# negative correlation between steps and bmi for women?
+# It is negative correlation between steps and bmi for women.
+correlation <- cor.test(dw$bmi, dw$steps)
+correlation
+```
+
+**Answer:**
+
+```{r q2}
+# positive correlation between steps and bmi for men?
+# It is NOT positive correlation between steps and bmi for men.
+correlation <- cor.test(dm$bmi, dm$steps)
+correlation
+```
+
+**Answer:**
+
+```{r q3}
+# difference in the mean number of steps between women and men?
+diff_w_m <- mean(dw$steps) - mean(dm$steps)
+```
+
+4.  What other conclusions can you draw from the data?
+
+**Answer:**
+
+```{r q4}
+# other conclusions?
+plot(dw$steps, dw$bmi, xlab = "Number of Steps for Women", ylab = "Number of bmi for Women")
+plot(dm$steps, dm$bmi, xlab = "Number of Steps for Men", ylab = "Number of bmi for Men")
+```
